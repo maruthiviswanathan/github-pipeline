@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-webapp
+  labels:
+    app: springboot-webapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: springboot-webapp
+  template:
+    metadata:
+      labels:
+        app: springboot-webapp
+    spec:
+      containers:
+      - name: springboot-webapp
+        image: your-docker-repo/springboot-webapp:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "prod"  # Optional: Set Spring profile (dev, prod, etc.)
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config  # Optional: If you have configuration files
+      volumes:
+      - name: config-volume
+        configMap:
+          name: springboot-config  # Optional: Refer to a ConfigMap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-webapp-service
+spec:
+  selector:
+    app: springboot-webapp
+  ports:
+    - protocol: TCP
+      port: 80  # Exposing service on port 80 (external port)
+      targetPort: 8080  # Spring Boot app is running on port 8080 inside the container
+  type: LoadBalancer  # You can change this to ClusterIP or NodePort depending on your needs

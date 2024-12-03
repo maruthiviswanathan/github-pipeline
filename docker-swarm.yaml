@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  springboot-web-app:
+    image: <your-dockerhub-username>/springboot-web-app:latest
+    container_name: springboot-web-app
+    deploy:
+      replicas: 3  # Number of instances you want to run in Docker Swarm
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: "prod"  # Set Spring profile for production
+    restart: always
