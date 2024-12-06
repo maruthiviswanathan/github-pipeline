@@ -84,11 +84,29 @@ variables:
 
 # Control where to scan for modules in the project.
 #
-modules:
+# modules:
   # Specify a list of POSIX-style paths or globs that should be scanned for Garden modules.
   #
-  include:
-    - modules/**/*
+#  include:
+  #  - modules/**/*
+
+modules:
+  - name: spring-boot-web-app
+    type: container
+    description: "Spring Boot Web Application"
+    services:
+      - name: springboot-web-service
+        containers:
+          - image: "spring-boot-app-image"  # Replace with your actual image name
+            build:
+              context: "./"  # Point to your Dockerfile location or project directory
+              dockerfile: Dockerfile  # Make sure this points to the correct Dockerfile
+            ports:
+              - protocol: http
+                target: 8081
+                exposed: true
+                port: 8081
+
 
   # Specify a list of POSIX-style paths or glob patterns that should be excluded when scanning for modules.
   #
