@@ -66,25 +66,6 @@ varfile: "project.garden.env"
 variables:
   SPRING_PROFILES_ACTIVE: "development"
 
-modules:
-  - name : "spring-boot-app"
-    type: container
-    services:
-      - name: "spring-boot-app"
-        ports:
-          - protocol: "http"
-            port: 8081
-        probes:
-          liveness:
-            type: "http"
-            path: "/actuator/health"
-            port: 8081
-          readiness:
-            type: "http"
-            path: "/actuator/health"
-            port: 8081
-        environment:
-          JAVA_OPTS: "-Xmx512m"  
 
 # The default environment to use when calling commands without the `--env` parameter.
 #
@@ -103,11 +84,11 @@ modules:
 
 # Control where to scan for modules in the project.
 #
-# modules:
+modules:
   # Specify a list of POSIX-style paths or globs that should be scanned for Garden modules.
   #
-  # include:
-  #   - modules/**/*
+  include:
+    - modules/**/*
 
   # Specify a list of POSIX-style paths or glob patterns that should be excluded when scanning for modules.
   #
