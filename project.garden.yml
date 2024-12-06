@@ -8,6 +8,11 @@ name: spring-boot-hello-world-main
 environments:
   - # The name of the environment.
     name: default
+    providers:
+      - name: local-kubernetes
+    variables:
+      SERVER_PORT: "8081"
+
 
     # Set the default namespace to use. This can be templated to be user-specific, or to use an environment variable
     # (e.g. in CI).
@@ -75,6 +80,20 @@ environments:
 providers:
   - # The name of the provider plugin to use.
     name: local-kubernetes
+    config:
+      kubeContext: "minikube"
+      namespace: "default"
+defaultEnvironment: "default"
+outputs:
+  - name: "web-app-url"
+    value: "http://localhost:8081"
+sources:
+  - name: "spring-boot-app"
+    repositoryUrl: "https://github.com/maruthiviswanathan/github-pipeline.git#main"
+varfile: "project.garden.env"
+variables:
+  SPRING_PROFILES_ACTIVE: "development"
+
 
     # List other providers that should be resolved before this one.
     #
