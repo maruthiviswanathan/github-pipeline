@@ -91,11 +91,11 @@ variables:
   #  - modules/**/*
 
 modules:
-  spring-boot-web-app:
-    type: "container"
+  - name: spring-boot-web-app
+    type: container
     description: "Spring Boot Web Application"
     services:
-      - name: "springboot-web-service"
+      - name: springboot-web-service
         containers:
           - image: "spring-boot-app-image"  # Replace with your actual image name
             build:
