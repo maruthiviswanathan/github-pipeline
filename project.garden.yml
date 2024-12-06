@@ -67,7 +67,7 @@ variables:
   SPRING_PROFILES_ACTIVE: "development"
 
 modules:
-  spring-boot-app:
+  - name : "spring-boot-app"
     type: container
     services:
       - name: "spring-boot-app"
