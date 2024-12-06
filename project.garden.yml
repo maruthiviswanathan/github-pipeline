@@ -93,6 +93,25 @@ sources:
 varfile: "project.garden.env"
 variables:
   SPRING_PROFILES_ACTIVE: "development"
+modules:
+  - name: "spring-boot-app"
+    type: "container"
+    services:
+      - name: "spring-boot-app"
+        ports:
+          - protocol: "http"
+            port: 8080
+        probes:
+          liveness:
+            type: "http"
+            path: "/actuator/health"
+            port: 8080
+          readiness:
+            type: "http"
+            path: "/actuator/health"
+            port: 8080
+        environment:
+          JAVA_OPTS: "-Xmx512m"  
 
 
     # List other providers that should be resolved before this one.
