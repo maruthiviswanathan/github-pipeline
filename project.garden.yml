@@ -92,17 +92,17 @@ variables:
 
 modules:
   spring-boot-web-app:
-    type: container
+    type: "container"
     description: "Spring Boot Web Application"
     services:
-      - name: springboot-web-service
+      - name: "springboot-web-service"
         containers:
           - image: "spring-boot-app-image"  # Replace with your actual image name
             build:
               context: "./"  # Build from current directory, adjust if needed
               dockerfile: Dockerfile  # Ensure this points to your Dockerfile
             ports:
-              - protocol: http
+              - protocol: "http"
                 target: 8081
                 exposed: true
                 port: 8081
