@@ -21,7 +21,7 @@ providers:
       namespace: "default"
 
 modules:
-  - name: spring-boot-web-app
+  spring-boot-web-app:
     type: container
     description: "Spring Boot Web Application"
     services:
@@ -38,13 +38,12 @@ modules:
                 port: 8081
 
 sources:
-  - name: spring-boot-app
+  spring-boot-app:
     repositoryUrl: "https://github.com/maruthiviswanathan/github-pipeline.git#main"
 
 variables:
-  - name: SPRING_PROFILES_ACTIVE
-    value: "development"
+  SPRING_PROFILES_ACTIVE: "development"
 
 outputs:
-  - name: web-app-url
+  web-app-url:
     value: "http://localhost:8081"
