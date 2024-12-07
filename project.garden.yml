@@ -1,94 +1,24 @@
-# Indicate what kind of config this is.
 kind: Project
 
-# The name of the project.
 name: spring-boot-hello-world-main
 
-# A list of environments to configure for the project.
+defaultEnvironment: "default"
+
 environments:
-  - # The name of the environment.
-    name: default
+  - name: default
     providers:
       - name: local-kubernetes
+        config:
+          kubeContext: "minikube"
+          namespace: "default"
     variables:
       SERVER_PORT: "8081"
 
-    # Set the default namespace to use. This can be templated to be user-specific, or to use an environment variable
-    # (e.g. in CI).
-    #
-    # defaultNamespace: "user-${local.username}"
-
-    # Flag the environment as a production environment.
-    #
-    # production: true
-
-        # The name of the provider plugin to use.
-        #
-        # name: "local-kubernetes"
-
-        # List other providers that should be resolved before this one.
-        #
-        # dependencies:
-        #   - exec
-
-        # If specified, this provider will only be used in the listed environments. Note that an empty array
-        # effectively disables the provider. To use a provider in all environments, omit this field.
-        #
-        # environments:
-        #   - dev
-        #   - stage
-
-    # Specify a path (relative to the project root) to a file containing variables, that we apply on top of the
-    # _environment-specific_ `variables` field.
-    #
-    # varfile: "custom.env"
-
-    # A key/value map of variables that modules can reference when using this environment.
-    #
-    # variables: {}
-
-# A list of providers that should be used for this project, and their configuration.
 providers:
-  - # The name of the provider plugin to use.
-    name: local-kubernetes
+  - name: local-kubernetes
     config:
       kubeContext: "minikube"
       namespace: "default"
-
-defaultEnvironment: "default"
-outputs:
-  - name: "web-app-url"
-    value: "http://localhost:8081"
-sources:
-  - name: "spring-boot-app"
-    repositoryUrl: "https://github.com/maruthiviswanathan/github-pipeline.git#main"
-varfile: "project.garden.env"
-variables:
-  SPRING_PROFILES_ACTIVE: "development"
-
-
-# The default environment to use when calling commands without the `--env` parameter.
-#
-# defaultEnvironment: "dev"
-
-# Specify a list of filenames that should be used as ".ignore" files across the project.
-#
-# dotIgnoreFiles:
-#   - .gardenignore
-#   - .gitignore
-
-# proxy:
-  # The URL that Garden uses when creating port forwards. Defaults to "localhost".
-  #
-  # hostname: 127.0.0.1
-
-# Control where to scan for modules in the project.
-#
-# modules:
-  # Specify a list of POSIX-style paths or globs that should be scanned for Garden modules.
-  #
-#  include:
-  #  - modules/**/*
 
 modules:
   spring-boot-web-app:
@@ -107,30 +37,12 @@ modules:
                 exposed: true
                 port: 8081
 
+sources:
+  spring-boot-app:
+    repositoryUrl: "https://github.com/maruthiviswanathan/github-pipeline.git#main"
 
-  # Specify a list of POSIX-style paths or glob patterns that should be excluded when scanning for modules.
-  #
-  # exclude:
-  #   - public/**/*
-  #   - tmp/**/*
+variables:
+  SPRING_PROFILES_ACTIVE: "development"
 
-# A list of output values that the project should export.
-#
-# outputs:
-  #- name: "my-output-key"
-  #   value: "${modules.my-module.outputs.some-output}"
-
-# A list of remote sources to import into project.
-#
-# sources:
-  #- name: "my-external-repo"
-  #   repositoryUrl: "git+https://github.com/org/repo.git#v2.0"
-
-# Specify a path (relative to the project root) to a file containing variables, that we apply on top of the
-# project-wide `variables` field.
-#
-# varfile: "custom.env"
-
-# Key/value map of variables to configure for all environments.
-#
-# variables: {}
+outputs:
+  web-app-url: "http://localhost:8081"
