@@ -91,7 +91,7 @@ variables:
   #  - modules/**/*
 
 modules:
-  - name: spring-boot-web-app
+  spring-boot-web-app:
     type: container
     description: "Spring Boot Web Application"
     services:
